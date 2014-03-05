@@ -49,7 +49,7 @@ define(
                     
                     annotationView.context.beginPath();
                     annotationView.context.moveTo(x,y);
-                    recordingObjects.canvasElements.push(new recordingObjects.canvasMoveTo(x,y,time));
+                    //recordingObjects.canvasElements.push(new recordingObjects.canvasMoveTo(x,y,time));
                     $target.bind("mousemove", mouseDraw);
                     $target.bind("mouseup", function(){$target.unbind("mousemove", mouseDraw)});
                 },
