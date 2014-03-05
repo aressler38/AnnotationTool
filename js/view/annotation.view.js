@@ -19,6 +19,10 @@ define(
             activeTool: null, 
             
             initialize: function() {
+                this.$el.css({
+                    "position": "absolute",
+                    "background": "transparent"
+                });
                 return null;
             },
             
@@ -44,7 +48,7 @@ define(
                 this.model.set("target", $(target));
                 var $target = this.model.get("target");
                 if (!$target[0]) throw new Error("You need to specify a HTML Element");
-                $target.html(this.el);
+                $target.prepend(this.el);
                 return null;
             },
 

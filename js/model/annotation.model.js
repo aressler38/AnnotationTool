@@ -16,13 +16,20 @@ define(
 
             initialize: function() {
                 var that = this;
-                var $target = $(this.get('target')); //sets target as jquery hopefully 
+                var $target = $(this.get("target"));
                 if (this.get("canvasWidth") || this.get("canvasHeight")) {
+                    /*
                     console.log( "Danger, Danger Will Robinson! You are initializing the annotation tool without "
                                 +"specifying the canvasWidth and canvasHeight! The default values will be used: "
                                 +this.defaults.canvasWidth+"x"+this.defaults.canvasHeight);
+                    */
                 }
-                if ($target[0]) this.set("target", $target);
+                
+                if ($target[0]) {
+                    this.set("target", $target);
+                    this.set("canvasWidth", $target.width());
+                    this.set("canvasHeight", $target.height());
+                }
                 this.set("id", _.uniqueId("annotation-canvas-"));
                 this.on("change:target", function(){that.set("target", $(arguments[1]))});
                 this.on("change:toolsTarget", function(){that.set("toolsTarget", $(arguments[1]))});
