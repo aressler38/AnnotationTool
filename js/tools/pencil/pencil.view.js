@@ -35,7 +35,7 @@ define(
                     var x = e.pageX-offsetLeft + 1;
                     var y = e.pageY-offsetTop; 
                     var time = new Date().getTime();
-                    var recordingObjects = annotationView.model.get("recordingObjects");
+                    //var recordingObjects = annotationView.model.get("recordingObjects");
 
                     function mouseDraw (e) {
                         var x = e.pageX-offsetLeft + 1;
@@ -44,7 +44,7 @@ define(
 
                         annotationView.context.lineTo(x,y); 
                         annotationView.context.stroke();
-                        recordingObjects.canvasElements.push(new recordingObjects.canvasLineTo(x,y,time));
+                     //   recordingObjects.canvasElements.push(new recordingObjects.canvasLineTo(x,y,time));
                     }
                     
                     annotationView.context.beginPath();
@@ -62,7 +62,7 @@ define(
                     var x = e.touches[0].pageX-offsetLeft + 1;
                     var y = e.touches[0].pageY-offsetTop;
                     var time = new Date().getTime();
-                    var recordingObjects = annotationView.model.get("recordingObjects");
+                    //var recordingObjects = annotationView.model.get("recordingObjects");
 
                     function touchDraw(e) {
                         e.preventDefault();
@@ -72,12 +72,12 @@ define(
 
                         annotationView.context.lineTo(x,y); 
                         annotationView.context.stroke();
-                        recordingObjects.canvasElements.push(new recordingObjects.canvasLineTo(x,y,time));
+                     //   recordingObjects.canvasElements.push(new recordingObjects.canvasLineTo(x,y,time));
                     }
 
                     annotationView.context.beginPath();
                     annotationView.context.moveTo(x,y);
-                    recordingObjects.canvasElements.push(new recordingObjects.canvasMoveTo(x,y,time));
+                    //recordingObjects.canvasElements.push(new recordingObjects.canvasMoveTo(x,y,time));
                     $target[0].addEventListener("touchmove", touchDraw);
                     $target[0].addEventListener("touchend", function(){$target.unbind("touchmove",touchDraw)});
                 }
