@@ -22,12 +22,6 @@ define(
         })();
 
 
-        // MAIN APPLICATION INTERFACE
-
-        var configOptions = {
-            target:document.getElementById("target")
-        };
-
         /**
          * @constructor
          */
