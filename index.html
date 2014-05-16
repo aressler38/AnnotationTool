@@ -22,18 +22,18 @@
             border: 1px solid blue;
             margin: 10px;
             padding: 10px;
-            width: 90%;
-            height:90%;
+            cursor: pointer;
         }
         .button {
             display: inline-block;
             background: rgba(30,30,30,0.4);
             min-width: 50px;
-            height: 4ex;
-            line-height: 4ex;
+            height: 40px;
+            line-height: 40px;
             border: 1px solid black;
             vertical-align: middle;
             text-align: center;
+            cursor: pointer;
         }
         .button:active {
             background:blue;
@@ -42,12 +42,30 @@
         }
         #tools {
             text-align: center;
+            user-select:none;
+            -webkit-user-select:none;
+            -moz-user-select:none;
+
         }
         #pencil {
             margin-left:20px;
         }
         #eraser {
             margin-right:20px;
+        }
+        #camera {
+            
+        }
+        @media (max-width: 520px) {
+            #pencil {
+                margin-left:5px;
+            }
+            #eraser {
+                margin-right:5px;
+            }
+            #tools {
+                text-align: left;
+            }
         }
     </style>
 
@@ -57,18 +75,34 @@
         <div id="decrease-stroke" class="button">-</div>
         <div id="pencil" class="button"><span class="icon-pencil"></span></div>
         <div id="eraser" class="button"><span class="icon-eraser"></span></div>
+        <div id="camera" class="button"><a id="download" href="" download=""><span class="icon-camera"></a></span></div>
     </div>
     <div id="target"> </div>
 
     <script>
         require(["main"], function(AnnotationTool) {
-            var target = document.getElementById("target");
-            var register;
+            window.setTimeout(function() {
 
             window.scratchpad = new AnnotationTool({target:"#target"});
+            var target = document.getElementById("target");
+            var register;
+            var initialOrientation = detectOrientation();
+
+            // warning clears the screen
+            function resize() {
+                target.style.width = (window.innerWidth - 85) + "px";
+                target.style.height = (window.innerHeight - 85) + "px";
+                window.scratchpad.set("size", [(window.innerWidth - 85) , (window.innerHeight - 85)]);
+            }
             window.scratchpad.render("#target");
             window.scratchpad.setActiveTool("pencil");
             window.scratchpad.renderUtils("#tools");
+            resize();
+
+            function detectOrientation() {
+                if (window.innerWidth > window.innerHeight) { return "landscape"; }
+                else { return "portrait"; }
+            }
 
             // stroke widths
             var increaseStroke = document.getElementById("increase-stroke");
@@ -85,7 +119,6 @@
                 }
             };
 
-
             // pencil and eraser
             var pencil = document.getElementById("pencil");
             var eraser = document.getElementById("eraser");
@@ -95,6 +128,15 @@
             eraser.onclick = function() {
                 window.scratchpad.set("eraser", "on");
             };
+
+            // download img
+            var download = document.getElementById("download");
+            download.addEventListener("click", function(event) {
+                download.setAttribute("href", window.scratchpad.getImg());
+                download.setAttribute("download", "scratchpad.png");
+            });
+
+        }, 900);
 
         });
     </script>

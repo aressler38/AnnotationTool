@@ -10,6 +10,7 @@ define(
         var AnnotationModel = backbone.Model.extend({
             
             defaults: {
+                size: [300,300],
                 canvasWidth: 300,
                 canvasHeight: 300,
                 strokeWidth: 2

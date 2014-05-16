@@ -44,6 +44,14 @@ define(
             view.trigger.apply(view, arguments);
         };
 
+        /** @method - return a base64 representation of the current drawing */
+        this.getImg = function(type) {
+            return view.getCurrentImage(type);
+        };
+
+        this.drawImage = function(img, x, y) {
+            view.drawImage.apply(view, arguments);
+        };
 
         /**
          * @object - turn on and off the eraser tool
@@ -102,10 +110,6 @@ define(
         this.trigger("clearCanvas");
     };
     
-    /** @method - return a base64 representation of the current drawing */
-    AnnotationTool.prototype.getImg = function(type) {
-        return this.trigger("getCurrentImage", type);
-    };
     
     AnnotationTool.prototype.setBackground = function(imgSrc) {
         this.set("background", imgSrc);

@@ -37,8 +37,7 @@ define(
                 // ----------------------------------------------------------------------------------------
                 // Set HTML attributes
                 this.$el.attr("id", this.model.get("id"));
-                this.canvas.setAttribute("width", this.model.get("canvasWidth"));
-                this.canvas.setAttribute("height", this.model.get("canvasHeight"));
+                this.setSize(this.model.get("canvasWidth"), this.model.get("canvasHeight"));
                 // do you want splash animation?
                 if (this.model.get("splashAnimation")) {
                     $(this.canvas).addClass("annotation-tool-transition-all");

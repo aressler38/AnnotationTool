@@ -33,6 +33,9 @@ define(
                 this.listenTo(this.model, "change:strokeStyle", this.setStrokeStyle);
                 this.listenTo(this.model, "change:background", this.setBackground);
                 this.listenTo(this.model, "change:eraser", this.setEraser);
+                this.listenTo(this.model, "change:canvasWidth", this.setSize);
+                this.listenTo(this.model, "change:canvasHeight", this.setSize);
+                this.listenTo(this.model, "change:size", this.setSize);
                 // BIND TRIGGER LISTENERS
                 this.on("clearCanvas", this.clearCanvas, this);
                 this.on("getCurrentImage", this.getCurrentImage, this);
@@ -50,6 +53,12 @@ define(
                 if (!$target[0]) throw new Error("You need to specify a HTML Element");
                 $target.prepend(this.el);
                 return null;
+            },
+
+            setSize: function() {
+                var size = this.model.get("size");
+                this.canvas.setAttribute("width", size[0]);
+                this.canvas.setAttribute("height", size[1]);
             },
 
             setEraser: function() {
@@ -88,6 +97,15 @@ define(
             getCurrentImage: function(type) {
                 if (type) return this.el.toDataURL(type);
                 else return this.el.toDataURL("image/png");
+            },
+
+            drawImage: function(img, x, y) {
+                if (typeof img === "string") {
+                    var src = img;
+                    img = new Image();
+                    img.src = src;
+                }
+                this.context.drawImage(img, x, y);    
             },
 
             getCurrentBlob: function() {
