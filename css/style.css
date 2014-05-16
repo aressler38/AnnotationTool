@@ -1,0 +1,37 @@
+.annotation-tool-transition-all {
+    -webkit-transition: all 2s ease-in-out;
+    -moz-transition: all 2s ease-in-out;
+    transition: all 2s ease-in-out;
+}
+
+.annotation-tool-transition-all.splashAnimation {
+    -webkit-transform: matrix(0.5 , 0.5 , -0.5, 0.5, 100, 100);
+    -moz-transform: matrix(0.5 , 0.5 , -0.5, 0.5, 100, 100);
+    transform: matrix(0.5 , 0.5 , -0.5, 0.5, 100, 100);
+    opacity:0;
+}
+
+.annotation-tool-canvas {
+    position:absolute;
+    z-index:147483647; /*woo*/
+    border:3px solid #ff6633; /*can this border*/
+    background-color: transparent;
+}
+
+
+
+/* color picker */
+.annotation-tool-spectrum {
+}
+
+/* input for stroke size */
+/* DEPRECATED */
+.annotation-tool-stroke-size.noUiSlider.horizontal {
+    margin-top:5px;
+    width:50px;
+
+}
+
+.clear {
+    clear:both;
+}

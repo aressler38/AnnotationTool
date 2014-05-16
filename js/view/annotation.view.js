@@ -9,7 +9,7 @@ define(
         "utils"
     ],
 
-    function($, _, backbone, Tools, None, None, utils) {
+    function($, _, backbone, Tools, na, None, utils) {
 
         var AnnotationView = backbone.View.extend({
             

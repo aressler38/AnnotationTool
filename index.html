@@ -1,7 +1,8 @@
 <!doctype html5>
 <html>
 <head>
-    <link rel="stylesheet" type="text/css" href="css/main.css">
+    <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height, target-densitydpi=device-dpi" />
+    <link rel="stylesheet" type="text/css" href="css/main.css" />
 
     <script type="text/javascript" data-main="require_config.js" 
             src="vendor/require/require-full-2.1.8.js"></script>
@@ -9,38 +10,93 @@
 </head>
 
 <body>
-    <h1>HTML5 Canvas Annotation Tool Test</h1>
-    
-    <div class="clear"></div>
-
     <style>
+        html {
+            -ms-overflow-style:none !important;
+        }
+        body {
+            -ms-content-zooming:none;
+            -ms-touch-action:none;
+        }
         #target {
             border: 1px solid blue;
+            margin: 10px;
             padding: 10px;
-            max-width: 645px;
+            width: 90%;
+            height:90%;
+        }
+        .button {
+            display: inline-block;
+            background: rgba(30,30,30,0.4);
+            min-width: 50px;
+            height: 4ex;
+            line-height: 4ex;
+            border: 1px solid black;
+            vertical-align: middle;
+            text-align: center;
+        }
+        .button:active {
+            background:blue;
+        }
+        .button span {
+        }
+        #tools {
+            text-align: center;
+        }
+        #pencil {
+            margin-left:20px;
+        }
+        #eraser {
+            margin-right:20px;
         }
     </style>
 
 
-    <div id="target" style="border:1px solid blue;">
-        <img src="addition.png">
+    <div id="tools">
+        <div id="increase-stroke" class="button">+</div>
+        <div id="decrease-stroke" class="button">-</div>
+        <div id="pencil" class="button"><span class="icon-pencil"></span></div>
+        <div id="eraser" class="button"><span class="icon-eraser"></span></div>
     </div>
-    <div class="clear"></div>
-    <div id="tools"></div>
-
-
+    <div id="target"> </div>
 
     <script>
-        window.setTimeout(function(){
-            var AnnotationTool = require(["main"], function(AnnotationTool) {
-                window.a = new AnnotationTool({target:"#target"});
-                window.a.render("#target");
-                window.a.setActiveTool("pencil");
-                window.a.renderUtils("#tools");
-            });
-        },200);
-        
+        require(["main"], function(AnnotationTool) {
+            var target = document.getElementById("target");
+            var register;
 
+            window.scratchpad = new AnnotationTool({target:"#target"});
+            window.scratchpad.render("#target");
+            window.scratchpad.setActiveTool("pencil");
+            window.scratchpad.renderUtils("#tools");
+
+            // stroke widths
+            var increaseStroke = document.getElementById("increase-stroke");
+            var decreaseStroke = document.getElementById("decrease-stroke");
+            var strokeDelta = 5
+            increaseStroke.onclick = function() {
+                register = window.scratchpad.get("strokeWidth");
+                window.scratchpad.set("strokeWidth",  register + strokeDelta);
+            };
+            decreaseStroke.onclick = function() {
+                register = window.scratchpad.get("strokeWidth");
+                if (register > 0) {
+                    window.scratchpad.set("strokeWidth", register - strokeDelta);
+                }
+            };
+
+
+            // pencil and eraser
+            var pencil = document.getElementById("pencil");
+            var eraser = document.getElementById("eraser");
+            pencil.onclick = function() {
+                window.scratchpad.set("eraser", "off");
+            };
+            eraser.onclick = function() {
+                window.scratchpad.set("eraser", "on");
+            };
+
+        });
     </script>
 
 </body>

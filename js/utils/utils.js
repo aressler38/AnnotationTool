@@ -89,10 +89,13 @@ define(
 
                 var toolsTarget = this.model.get("toolsTarget");
                 if (!toolsTarget) {throw new Error ("Please specify a jQuery selector/target for the tools");}
+                /*
                 var tools = [
                     renderColorPicker,   
                     renderStrokePicker
                 ];
+                */
+                var tools = [renderColorPicker];
                 for (var i=0,tLen=tools.length; i<tLen; i++) tools[i].call(this, toolsTarget);
                 return null;
             },

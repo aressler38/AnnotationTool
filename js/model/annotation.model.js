@@ -11,7 +11,8 @@ define(
             
             defaults: {
                 canvasWidth: 300,
-                canvasHeight: 300
+                canvasHeight: 300,
+                strokeWidth: 2
             },
 
             initialize: function() {

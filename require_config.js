@@ -5,11 +5,6 @@ require.config({
     baseURL: "./",
 
     shim: {
-        /*
-        jquery: {
-            exports: "jQuery"
-        },
-        */
         noUiSlider: {
             deps: ["jquery"]
         },
@@ -36,6 +31,5 @@ require.config({
         "utils"           : "js/utils/utils",
         "Tools"           : "js/tools/tools",
         "Pencil"          : "js/tools/pencil/pencil.view"
-          
     }
 });
