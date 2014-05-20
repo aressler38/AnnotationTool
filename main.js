@@ -5,8 +5,9 @@ define(
     "underscore", 
     "backbone",
     "annotationModel",
-    "annotationView"
-], function($, _, backbone, annotationModel, annotationView) {
+    "annotationView",
+    "utils"
+], function($, _, backbone, annotationModel, annotationView, utils) {
 
     // Globals and config here
 
@@ -28,6 +29,7 @@ define(
         var that = this;
         var model = new annotationModel(options);
         var view = new annotationView({model:model});
+        this.utils = utils;
 
         /** @method - proxy to model.get */
         this.get = function(parameter) {
