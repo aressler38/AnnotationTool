@@ -26,8 +26,8 @@ require.config({
         "backbone"        : "vendor/backbone/backbone-min",
         "spectrum"        : "vendor/spectrum/spectrum", // color picker jquery plugin
         "noUiSlider"      : "vendor/noUiSlider-5.0.0/full/jquery.nouislider", // slider plugin
-        "annotationModel" : "js/model/annotation.model",
-        "annotationView"  : "js/view/annotation.view",
+        "AnnotationModel" : "js/model/AnnotationModel",
+        "AnnotationView"  : "js/view/AnnotationView",
         "utils"           : "js/utils/utils",
         "Tools"           : "js/tools/tools",
         "Pencil"          : "js/tools/pencil/pencil.view"

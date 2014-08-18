@@ -54,7 +54,7 @@ define(
 
                 // initialize methods for rendering tools...
 
-                function renderStrokePicker(target) {
+                function renderStrokePicker (target) {
                     var context = this.context;
                     this.strokePicker = document.createElement("div");
                     this.strokePicker.setAttribute("class", "annotation-tool noUiSlider");
@@ -71,7 +71,7 @@ define(
                           
                     });
                 }
-                function renderColorPicker(target) {
+                function renderColorPicker (target) {
                     var context = this.context;
                     // create a colorpicker via spectrum
                     this.colorPicker = document.createElement("input");
@@ -87,7 +87,7 @@ define(
                 }
 
                 var toolsTarget = this.model.get("toolsTarget");
-                if (!toolsTarget) {throw new Error ("Please specify a jQuery selector/target for the tools");}
+                if (!toolsTarget) {throw "Please specify a jQuery selector/target for the tools";}
                 /*
                 var tools = [
                     renderColorPicker,   
@@ -95,13 +95,55 @@ define(
                 ];
                 */
                 var tools = [renderColorPicker];
-                for (var i=0,tLen=tools.length; i<tLen; i++) tools[i].call(this, toolsTarget);
+                for (var i=0,tLen=tools.length; i<tLen; i++) { tools[i].call(this, toolsTarget); }
                 return null;
             },
 
-
+            /**
+             * Draw a 'soft' line on a canvas. This method will actually draw several lines with 
+             * different transparancies and widths to make the illusion of a single soft line.
+             *
+             * @param {Object} ctx The 2d drawing context of a canvas
+             * @param {Number} x1 starting x coordinate
+             * @param {Number} y1 starting y coordinate
+             * @param {Number} x2 ending x coordinate
+             * @param {Number} y2 ending y coordinate
+             * @param {Number} [lineWidth] width of line to draw
+             * @param {String} [rgb] Hex color code (e.g. #1e1e1e) 
+             * @param {Number} [alpha] alpha channel 
+             */
+            drawSoftLine: function (ctx, x1, y1, x2, y2, lineWidth, rgb, alpha) {
+                var widths = [1   , 0.8 , 0.6 , 0.4 , 0.2  ];
+                var alphas = [0.2 , 0.4 , 0.6 , 0.8 , 1    ];
+                var _alpha;
+                var previousAlpha = 0;
+                if (!alpha) { alpha = 0.7; }
+                if (!lineWidth) { lineWidth = ctx.lineWidth; }
+                var firstLineWidth = lineWidth
+                var deltaAlpha = null;
+                var r,g,b;
+                if (!rgb) { rgb = ctx.strokeStyle; }
+                var hexColors = rgb.substring(1);
+                r = Number("0x"+hexColors[0]+hexColors[1]);
+                g = Number("0x"+hexColors[2]+hexColors[3]);
+                b = Number("0x"+hexColors[4]+hexColors[5]);
+                for (var pass = 0; pass < widths.length; pass++) {
+                    ctx.beginPath();
+                    ctx.lineWidth = lineWidth * widths[pass];
+                    ctx.lineCap = "round";
+                    _alpha = alphas[pass] * alpha;
+                    // Formula: (1 - alpha) = (1 - deltaAlpha) * (1 - previousAlpha)
+                    deltaAlpha = 1 - (1 - _alpha) / (1 - previousAlpha);
+                    console.log(deltaAlpha);
+                    ctx.strokeStyle = "rgba(" + r + "," + g + "," + b + "," + deltaAlpha + ")";
+                    ctx.lineCap = "round";
+                    ctx.moveTo(x1, y1);
+                    ctx.lineTo(x2, y2);
+                    ctx.stroke();
+                    previousAlpha = _alpha;
+                }
+                ctx.lineWidth = firstLineWidth; // reset context's lineWidth property.
+            }
         });
-
-
     }
 );

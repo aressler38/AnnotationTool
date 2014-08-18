@@ -23,6 +23,7 @@ define(
                     "position": "absolute",
                     "background": "transparent"
                 });
+                window.av = this;
                 return null;
             },
             
@@ -157,6 +158,13 @@ define(
                 }
             },
 
+            
+            /**
+             * Perform an action on the canvas determined by `canvasObject`. Currently, the supported
+             * actions are `moveTo` and `lineTo`.
+             * @param {Object} canvasObject A single instance of an object representing an action
+             *                 to be made on the canvas. 
+             */
             paintCanvasObject: function(canvasObject) {
                 if (typeof(canvasObject) != "object") {throw new Error("Expecting a canvas object.");}
                 var name = canvasObject.name; 
@@ -210,6 +218,10 @@ define(
 
             }, 
 
+            /**
+             * Get the recorded objects from the model, clear the canvas, 
+             * and paint the canvas using a requestAnimationFrame.
+             */
             playback: function() {
                 
                 this.clearCanvas();
@@ -228,7 +240,7 @@ define(
                 function replay() { 
                     var startTime = (window.performance.now) ? 
                         (window.performance.now()) : Date.now();
-                    requestAnimFrame(redrawCanvas);
+                    requestAnimationFrame(redrawCanvas);
                     function redrawCanvas() {
                         // end animation if the arrayCounter has reached the last element in the array
                         if (arrayCounter == arrayLen) {
@@ -245,12 +257,16 @@ define(
                             annotationTool.paintCanvasObject(canvasElements[arrayCounter]);
                             arrayCounter++;
                         }
-                        requestAnimFrame(redrawCanvas);
+                        requestAnimationFrame(redrawCanvas);
                     }
                 }
                 replay();
             },
 
+
+            /**
+             * @deprecated
+             */
             canvasGoAway: function(faster) {
                 var counter = ((faster) ? 99:0);
                 var that = this;
@@ -263,11 +279,14 @@ define(
                     if (counter>99) {
                         return null;
                     }
-                    window.requestAnimFrame(animateOverlay);
+                    window.requestAnimationFrame(animateOverlay);
                 }
-                window.requestAnimFrame(animateOverlay);
+                window.requestAnimationFrame(animateOverlay);
             },
             
+            /**
+             * @deprecated
+             */
             canvasComeBack: function(faster) {
                 var counter = ((faster) ? 99:0);
                 var that = this;
@@ -280,13 +299,16 @@ define(
                     if (counter>99) {
                         return null;
                     }
-                    window.requestAnimFrame(animateOverlay);
+                    window.requestAnimationFrame(animateOverlay);
                 }
-                window.requestAnimFrame(animateOverlay);
+                window.requestAnimationFrame(animateOverlay);
             },
 
+            /**
+             * Take a screenshot of the canvas and position the screenshot it over the 
+             * annotationTool's target container
+             */
             canvasOverlayCurrent: function() {
-                // take a screenshot of the canvas and position it over the target
                 var screenshot = this.getCurrentImage();//annotationTool.canvas.toDataURL("image/png");
                 annotationTool.fakeCanvas = document.createElement("img"); 
                 annotationTool.fakeCanvas.setAttribute("src", screenshot);
