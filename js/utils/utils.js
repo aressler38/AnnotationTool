@@ -117,7 +117,7 @@ define(
                 var alphas = [0.2 , 0.4 , 0.6 , 0.8 , 1    ];
                 var _alpha;
                 var previousAlpha = 0;
-                if (!alpha) { alpha = 0.7; }
+                if (!alpha) { alpha = 0.8; }
                 if (!lineWidth) { lineWidth = ctx.lineWidth; }
                 var firstLineWidth = lineWidth
                 var deltaAlpha = null;
@@ -127,6 +127,18 @@ define(
                 r = Number("0x"+hexColors[0]+hexColors[1]);
                 g = Number("0x"+hexColors[2]+hexColors[3]);
                 b = Number("0x"+hexColors[4]+hexColors[5]);
+                ctx.lineJoin = ctx.lineCap = "round";
+                ctx.shadowBlur = 10;
+                ctx.shadowColor = "rgb(0,0,0)";
+
+                ctx.beginPath();
+                ctx.strokeStyle = "rgba(" + r + "," + g + "," + b + "," + deltaAlpha + ")";
+                ctx.moveTo(x1, y1);
+                ctx.lineTo(x2, y2);
+                ctx.stroke();
+
+
+                /*
                 for (var pass = 0; pass < widths.length; pass++) {
                     ctx.beginPath();
                     ctx.lineWidth = lineWidth * widths[pass];
@@ -143,6 +155,8 @@ define(
                     previousAlpha = _alpha;
                 }
                 ctx.lineWidth = firstLineWidth; // reset context's lineWidth property.
+                */
+
             }
         });
     }
